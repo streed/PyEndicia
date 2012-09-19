@@ -1,0 +1,28 @@
+<html>
+	<head>
+		<title>PyEndicia</title>
+	</head>
+
+	<body>
+		<p>This package was written to work on a personal project that fell through at the end, but none the less felt that I should release the code as I had really no other current use for it.</p>
+		<p>To use this you need to use the `inject` library and a configuration module as such:</p>
+		<pre>
+			import inject
+			class ModuleConfig( object ):
+				def __call__( self, injector ):
+					injector.bind( "endiciaPartnerId", to="123456" )
+					injector.bind( "endiciaAccountId", to="123456" )
+					injector.bind( "endiciaPassPhrase", to="x" )
+					injector.bind( "endiciaBaseUrl", to="https://envmgr.com/LabelService/EwsLabelService.asmx" )
+
+			if __name__=="__main__":
+				injector = inject.Injector()
+				inject.register( injector )
+				config = ModuleConfig()
+				config( injector )
+
+				#Now you can make your calls. Look in the endicia/test folder for examples of use.
+		</pre>
+	</body>
+</html>
+				
