@@ -3,49 +3,152 @@
   <head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
-
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
     <title>Pyendicia by streed</title>
   </head>
 
   <body>
+    <div id="container">
+      <div class="inner">
 
-    <header>
-      <div class="container">
-        <h1>Pyendicia</h1>
-        <h2>Endicia Postage API</h2>
+        <header>
+          <h1>Pyendicia</h1>
+          <h2>Endicia Postage API</h2>
+        </header>
 
-        <section id="downloads">
-          <a href="https://github.com/streed/PyEndicia/zipball/master" class="btn">Download as .zip</a>
-          <a href="https://github.com/streed/PyEndicia/tarball/master" class="btn">Download as .tar.gz</a>
-          <a href="https://github.com/streed/PyEndicia" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/streed/PyEndicia/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/streed/PyEndicia/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/streed/PyEndicia" id="view-on-github" class="button"><span>View on GitHub</span></a>
         </section>
-      </div>
-    </header>
 
-    <div class="container">
-      <section id="main_content">
-        <h3>PyEndicia Documentation</h3>
+        <hr>
 
-<h1>This project came about from a failed project</h1>
+        <section id="main_content">
+          <h2>This project came about from a project that just never got finished</h2>
 
 <p>This API access meets the requirements for using Endicia's API baed on their documentation and my conversations with their dev team and sales team.</p>
 
-<p>It fulfills the following requirements:</p>
+<h2>Fulfillment's</h2>
 
 <ul>
 <li>Change Password</li>
 <li>Buy Postage</li>
 <li>Label</li>
-</ul><p>These are as fulfilled as best as I could with their limited development environment.</p>
+</ul><p>These API calls have been implemented as best as I could by only having access to Endicia's test API which is not a full implementation of their true API.</p>
 
-<p>To extend the library is quite simple to do and requires you to write a new Builder, new Breaker, and a new Request class. Then you can very easily request this new API call from within the library.</p>
-      </section>
+<h2>Dependencies</h2>
+
+<ul>
+<li><a href="https://github.com/lxml/lxml">lxml</a></li>
+<li><a href="http://code.google.com/p/httplib2/">httplib2</a></li>
+<li><a href="https://github.com/halst/schema">schema</a></li>
+<li><a href="https://github.com/ivan-korobkov/python-inject">inject</a></li>
+</ul><p>The unittests are written using <a href="https://github.com/nose-devs/nose">nose</a> so that is also required.</p>
+
+<h2>Helping out</h2>
+
+<p>If there are any issues with the code please open a issue on github.
+If you have an improvement then open a pull request and make sure to include tests for the code if they are needed.</p>
+
+<h2>Adding the other API calls.</h2>
+
+<p>You need to create three new classes in order to add new functionality to the library.</p>
+
+<p>First you need to create a new <code>XmlBreaker</code></p>
+
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">EndiciaXmlBreaker</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span> <span class="bp">self</span> <span class="p">):</span>
+        <span class="k">pass</span>
+    <span class="k">def</span> <span class="nf">setXmlString</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">xml</span> <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xml</span> <span class="o">=</span> <span class="n">xml</span>
+    <span class="k">def</span> <span class="nf">to_map</span><span class="p">(</span> <span class="bp">self</span> <span class="p">):</span>
+        <span class="k">pass</span>
+</pre></div>
+
+<p>To create a new breaker you must only implement the <code>to_map</code> method.</p>
+
+<p>Next you need to create a new <code>XmlBuilder</code></p>
+
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">EndiciaXmlBuilder</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span> <span class="bp">self</span> <span class="p">):</span>
+        <span class="k">pass</span>
+    <span class="k">def</span> <span class="nf">to_string</span><span class="p">(</span> <span class="bp">self</span> <span class="p">):</span>
+        <span class="k">pass</span>
+    <span class="k">def</span> <span class="nf">to_hash</span><span class="p">(</span> <span class="bp">self</span> <span class="p">):</span>
+        <span class="k">pass</span>
+    <span class="k">def</span> <span class="nf">to_json</span><span class="p">(</span> <span class="bp">self</span> <span class="p">):</span>
+        <span class="k">pass</span>
+    <span class="k">def</span> <span class="nf">to_xml</span><span class="p">(</span> <span class="bp">self</span> <span class="p">):</span>
+       <span class="k">pass</span>
+</pre></div>
+
+<p>The library only uses the <code>to_xml</code> so you only need to implement that method the others are for other reasons that were required at the time of my project.</p>
+
+<p>The final piece is the <code>Request</code> class.</p>
+
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">endicia.breakers.BuyPostageXmlBreaker</span> <span class="kn">import</span> <span class="n">BuyPostageXmlBreaker</span>
+<span class="kn">from</span> <span class="nn">EndiciaRequest</span> <span class="kn">import</span> <span class="n">EndiciaRequest</span>
+
+<span class="k">class</span> <span class="nc">RecreditRequest</span><span class="p">(</span> <span class="n">EndiciaRequest</span> <span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span> <span class="bp">self</span> <span class="p">):</span>
+        <span class="n">EndiciaRequest</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span> <span class="bp">self</span> <span class="p">)</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">breaker</span> <span class="o">=</span> <span class="n">BuyPostageXmlBreaker</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">endiciaCommand</span> <span class="o">=</span> <span class="s">"/BuyPostageXML"</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">endiciaPostName</span> <span class="o">=</span> <span class="s">"recreditRequestXML"</span>
+</pre></div>
+
+<p>To create a new request use the above as a template and fill in the <code>breaker</code> with the proper class that you created before. Change the <code>endiciaCommand</code> to match the URL of the command. And, finally set <code>endiciaPostName</code> to the post variable of the command. This is all that is needed to create a new request.</p>
+
+<p>After you have done the above you can then use your new request object, or one of the other requests already provided as such.</p>
+
+<div class="highlight"><pre><span class="n">label</span> <span class="o">=</span> <span class="n">LabelXmlBuilder</span><span class="p">()</span>
+<span class="n">label</span><span class="o">.</span><span class="n">setByMap</span><span class="p">(</span> <span class="n">labelMap</span> <span class="p">)</span>
+<span class="n">labelReq</span> <span class="o">=</span> <span class="n">LabelRequest</span><span class="p">()</span>
+<span class="n">theLabel</span> <span class="o">=</span> <span class="n">labelReq</span><span class="o">.</span><span class="n">get</span><span class="p">(</span> <span class="n">label</span> <span class="p">)</span>
+<span class="n">dumpToFile</span><span class="p">(</span> <span class="n">theLabel</span><span class="p">[</span><span class="s">"Base64LabelImage"</span><span class="p">]</span> <span class="p">)</span>
+</pre></div>
+
+<p>That's all that is required to get a label from Endicia's API. You need to set your information using an <code>inject</code> config module which can be seen below.</p>
+
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">inject</span>
+<span class="k">class</span> <span class="nc">ModuleConfig</span><span class="p">(</span> <span class="nb">object</span> <span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="n">injector</span> <span class="p">):</span>
+        <span class="n">injector</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span> <span class="s">"endiciaPartnerId"</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="s">"123456"</span> <span class="p">)</span>
+        <span class="n">injector</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span> <span class="s">"endiciaAccountId"</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="s">"123456"</span> <span class="p">)</span>
+        <span class="n">injector</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span> <span class="s">"endiciaPassPhrase"</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="s">"x"</span> <span class="p">)</span>
+        <span class="n">injector</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span> <span class="s">"endiciaBaseUrl"</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="s">"https://envmgr.com/LabelService/EwsLabelService.asmx"</span> <span class="p">)</span>
+</pre></div>
+
+<p>Using the module config like so:</p>
+
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">inject</span> 
+<span class="n">injector</span> <span class="o">=</span> <span class="n">inject</span><span class="o">.</span><span class="n">Injector</span><span class="p">()</span>
+<span class="n">inject</span><span class="o">.</span><span class="n">register</span><span class="p">(</span> <span class="n">injector</span> <span class="p">)</span>
+<span class="n">config</span><span class="p">(</span> <span class="n">injector</span> <span class="p">)</span>
+<span class="n">label</span> <span class="o">=</span> <span class="n">LabelXmlBuilder</span><span class="p">()</span>
+<span class="n">label</span><span class="o">.</span><span class="n">setByMap</span><span class="p">(</span> <span class="n">labelMap</span> <span class="p">)</span>
+<span class="n">labelReq</span> <span class="o">=</span> <span class="n">LabelRequest</span><span class="p">()</span>
+<span class="n">theLabel</span> <span class="o">=</span> <span class="n">labelReq</span><span class="o">.</span><span class="n">get</span><span class="p">(</span> <span class="n">label</span> <span class="p">)</span>
+<span class="n">dumpToFile</span><span class="p">(</span> <span class="n">theLabel</span><span class="p">[</span><span class="s">"Base64LabelImage"</span><span class="p">]</span> <span class="p">)</span>
+</pre></div>
+
+<p>And you have created your label using a centralized configuration.</p>
+        </section>
+
+        <footer>
+          Pyendicia is maintained by <a href="https://github.com/streed">streed</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
     </div>
-
-    
   </body>
 </html>
